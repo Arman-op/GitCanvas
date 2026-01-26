@@ -5,11 +5,11 @@ No more green squares—visualize your code journey as a galaxy, an 8-bit map, a
 
 ## 🚀 Features
 
-- **4 Artistic Themes**:
-  - **Space**: Commits become stars in a vast void.
-  - **Gaming**: An 8-bit retro map where contributions build castles.
-  - **Music**: Your coding frequency visualized as audio waveforms.
-  - **Marvel**: A comic-book style hero profile based on your commit power.
+- **Artistic Themes**:
+  - **Space**: Commits become stars in a vast void
+  - **Gaming**: An 8-bit retro map where contributions build castles
+  - **Music**: Your coding frequency visualized as audio waveforms
+  - **Marvel**: A comic-book style hero profile based on your commit power (and moreeee... coming soon....)
 - **AI Integration**: Placeholder logic ready for GenAI integration to analyze your "coding vibe".
 - **Instant Export**: Download your art as SVG.
 
