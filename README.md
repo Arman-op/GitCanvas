@@ -18,6 +18,9 @@ No more green squares, or any monotonous themes... visualize your code journey t
 ```
 https://gitcanvas-dm.streamlit.app/
 ```
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5542a4c4-38eb-48ca-8215-fe43012b4a4e" width="400" />
+</p>
 
 ## 🛠 Installation
 
