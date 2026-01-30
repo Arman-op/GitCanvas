@@ -233,14 +233,16 @@ with tab4:
         else:
             # Render Preview
             md_output = ""
+            # Making Global Variable, if user wants to match the theme:   
+            should_match = st.checkbox("Match Theme Color", value=False, key="match_theme_global")
             for name, conf in all_selected_badges:
                 # Logic to use custom color if user wants consistency?
                 # User asked for customization.
                 # Let's add a "Override All Colors" checkbox
                 
                 final_color = conf['color']
-                # If usage wants to match theme:
-                if st.checkbox("Match Theme Color", value=False, key="match_theme"):
+                # Using the variable we captured before:
+                if should_match:
                     final_color = current_theme_opts['title_color'].replace("#", "")
                 
                 url = badge_generator.generate_badge_url(name, final_color, conf['logo'], style=badge_style)
