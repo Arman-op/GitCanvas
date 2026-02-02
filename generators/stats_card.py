@@ -40,9 +40,14 @@ def draw_stats_card(data, theme_name="Default", show_options=None, custom_colors
     text_color = theme["text_color"]
     font_size = theme["text_font_size"]
     
+    # Logic to handle N/A display for commits if the value is 0 (API error)
+    commit_val = data.get('total_commits', 0)
+    # If commit_val is 0, we show "N/A", otherwise we show the number
+    display_commits = str(commit_val) if commit_val > 0 else "N/A"
+
     stats_map = [
         ("stars", "Total Stars", f"{data.get('total_stars', 0)}"),
-        ("commits", "Total Commits (Year)", f"{data.get('total_commits', 'N/A')}"),
+        ("commits", "Total Commits", display_commits),
         ("repos", "Public Repos", f"{data.get('public_repos', 0)}"),
         ("followers", "Followers", f"{data.get('followers', 0)}")
     ]

@@ -32,24 +32,20 @@ def get_live_github_data(username):
         
         top_langs = sorted(languages.items(), key=lambda x: x[1], reverse=True)[:5]
         
-        # Try to get Total Commits/Contributions via 3rd party API
-        total_commits = "N/A"
+        # Ensure total_commits is always an integer
+        total_commits = 0 
         try:
             contrib_url = f"https://github-contributions-api.jogruber.de/v4/{username}"
             contrib_resp = requests.get(contrib_url)
             if contrib_resp.status_code == 200:
                 c_data = contrib_resp.json()
-                # Sum up all contributions in the returned calendar year(s)
-                # The API usually returns 'total' object or we sum 'contributions' days
-                # Let's verify structure. Usually {total: {lastYear: X, ...}, contributions: [...]}
-                # Simplest is to sum all days count
-                all_days = []
-                if 'contributions' in c_data:
-                    for year_group in c_data['contributions']:
-                        all_days.extend(year_group.get('days', []))
-                    total_commits = sum(d.get('count', 0) for d in all_days)
+                if 'total' in c_data and isinstance(c_data['total'], dict):
+                    # Sum all year totals into a single integer
+                    total_commits = sum(c_data['total'].values())
+            # If the response isn't 200, it stays as 0
         except Exception as ex:
             print(f"Contrib API Error: {ex}")
+            total_commits = 0 # Safety fallback
 
         return {
             "username": username,
