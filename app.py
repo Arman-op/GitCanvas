@@ -1,8 +1,14 @@
 import streamlit as st
 import base64
+import os
+from dotenv import load_dotenv
+from roast_widget_streamlit import render_roast_widget
 from generators import stats_card, lang_card, contrib_card, badge_generator
 from utils import github_api
 from themes.styles import THEMES
+
+# Load environment variables
+load_dotenv()
 
 st.set_page_config(page_title="GitCanvas Builder", page_icon="🛠️", layout="wide")
 
@@ -89,7 +95,7 @@ if custom_colors:
     current_theme_opts.update(custom_colors)
 
 # --- Layout: Tabs ---
-tab1, tab2, tab3, tab4 = st.tabs(["Main Stats", "Languages", "Contributions", "Icons & Badges"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Main Stats", "Languages", "Contributions", "Icons & Badges", "🔥 AI Roast"])
 
 def show_code_area(code_content, label="Markdown Code"):
     st.markdown(f"**{label}** (Copy below)")
@@ -251,3 +257,13 @@ with tab4:
             
             st.markdown("---")
             show_code_area(md_output, label="Badge Code")
+
+# NEW TAB 5: AI ROAST
+with tab5:
+    st.subheader("🔥 AI Profile Roast")
+    st.markdown("Let AI roast your GitHub profile with humor!")
+    
+    if username:
+        render_roast_widget(username)
+    else:
+        st.warning("Please enter a GitHub username in the sidebar.")
