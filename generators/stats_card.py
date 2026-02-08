@@ -1,5 +1,6 @@
 import svgwrite
 from themes.styles import THEMES
+from .svg_base import create_svg_base
 
 def draw_stats_card(data, theme_name="Default", show_options=None, custom_colors=None):
     """
@@ -10,12 +11,7 @@ def draw_stats_card(data, theme_name="Default", show_options=None, custom_colors
     """
     if show_options is None:
         show_options = {"stars": True, "commits": True, "repos": True, "followers": True}
-        
-    theme = THEMES.get(theme_name, THEMES["Default"]).copy()
-    if custom_colors:
-        theme.update(custom_colors)
 
-    
     width = 450
     # Calculate height dynamically based on visible items
     base_height = 50
