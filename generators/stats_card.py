@@ -12,6 +12,18 @@ def draw_stats_card(data, theme_name="Default", show_options=None, custom_colors
     if show_options is None:
         show_options = {"stars": True, "commits": True, "repos": True, "followers": True}
 
+    # FIXED: Handle both string theme name and pre-resolved theme dict
+    if isinstance(theme_name, dict):
+        # Already a theme dictionary (e.g., current_theme_opts from app.py)
+        theme = theme_name.copy()
+    else:
+        # Convert theme_name string to actual theme dictionary
+        theme = THEMES.get(theme_name, THEMES["Default"]).copy()
+        
+        # Apply custom colors if provided
+        if custom_colors:
+            theme.update(custom_colors)
+
     width = 450
     # Calculate height dynamically based on visible items
     base_height = 50

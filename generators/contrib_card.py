@@ -2,14 +2,29 @@ import svgwrite
 import random
 from themes.styles import THEMES
 import math
+
 def draw_contrib_card(data, theme_name="Default", custom_colors=None):
     """
     Generates the Contribution Graph Card SVG.
     Supports 'Snake', 'Space', 'Marvel' visualization logic.
     """
-    # Fake contribution data for visualization if not fully populated
-    # In a real scenario, data['contributions'] would have the last ~15-30 days or weeks
-    # For MVP we simulate a strip of activity
+    # FIXED: Handle both string theme name and pre-resolved theme dict
+    # Also save the original theme name string for comparison later
+    original_theme_name = theme_name
+    
+    if isinstance(theme_name, dict):
+        # Already a theme dictionary (e.g., current_theme_opts from app.py)
+        theme = theme_name.copy()
+        # Extract the theme name from the dict if it has one, otherwise default
+        original_theme_name = theme.get('_theme_name', 'Default')
+    else:
+        # Convert theme_name string to actual theme dictionary
+        theme = THEMES.get(theme_name, THEMES["Default"]).copy()
+        original_theme_name = theme_name
+        
+        # Apply custom colors if provided
+        if custom_colors:
+            theme.update(custom_colors)
 
     width = 500
     height = 150
@@ -21,11 +36,13 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
     
     # Title
     title = f"{data['username']}'s Contributions"
-    dwg, theme = create_svg_base(theme_name, custom_colors, width, height, title)
+    dwg.add(dwg.text(title, insert=(20, 30), 
+                     fill=theme["title_color"], font_size=theme.get("title_font_size", 18), 
+                     font_family=theme.get("font_family", "Arial"), font_weight="bold"))
     
-    # Theme Specific Logic
+    # Theme Specific Logic - use original_theme_name for string comparisons
     
-    if theme_name == "Gaming":
+    if original_theme_name == "Gaming":
         # SNAKE Logic: A winding path of green blocks
         # "Eating my contributions" -> The snake head is at the last commit
         
@@ -61,7 +78,7 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
         dwg.add(dwg.rect(insert=(hx+3, hy+3), size=(3, 3), fill="black"))
         dwg.add(dwg.rect(insert=(hx+9, hy+3), size=(3, 3), fill="black"))
 
-    elif theme_name == "Space":
+    elif original_theme_name == "Space":
         # Spaceship logic
         # Commits are stars.
         dwg.defs.add(dwg.style("""
@@ -104,7 +121,7 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
         # Beam eating a star?
         dwg.add(dwg.line(start=(ship_x, ship_y), end=(width, ship_y), stroke="#00a8ff", stroke_width=2, stroke_dasharray="4,2"))
 
-    elif theme_name == "Marvel":
+    elif original_theme_name == "Marvel":
         # Infinity Stones
         stones = ["#FFD700", "#FF0000", "#0000FF", "#800080", "#008000", "#FFA500"] # Mind, Reality, Space, Power, Time, Soul
         
@@ -127,7 +144,7 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
             
         dwg.add(dwg.text("SNAP!", insert=(width-80, cy), fill=theme["title_color"], font_size=24, font_weight="bold", font_family="Impact"))
 
-    elif theme_name == "Neural":
+    elif original_theme_name == "Neural":
         cx = width / 2
         cy = height / 2 + 10
 
@@ -202,7 +219,6 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
                         stroke_width=1,
                         opacity=opacity
                     ))
-
 
     else:
         # Default Grid (Github Style)
