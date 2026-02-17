@@ -20,34 +20,43 @@ def render_roast_widget(username: str):
     st.markdown("""
     <style>
     .roast-widget {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
         border-radius: 16px;
         padding: 24px;
         color: white;
         margin: 20px 0;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
     .roast-header {
         text-align: center;
         font-size: 28px;
         font-weight: 700;
+        background: linear-gradient(90deg, #ff0055, #00e5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 10px;
     }
     .roast-subtitle {
         text-align: center;
         font-size: 14px;
-        opacity: 0.9;
+        opacity: 0.7;
         margin-bottom: 20px;
+        font-family: 'JetBrains Mono', monospace;
     }
     .roast-text {
-        background: rgba(255, 255, 255, 0.15);
-        border-left: 4px solid #ffd700;
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 4px solid #ff0055;
         border-radius: 8px;
-        padding: 20px;
-        font-size: 20px;
+        padding: 24px;
+        font-size: 18px;
         font-weight: 500;
         font-style: italic;
         margin: 20px 0;
         text-align: center;
+        line-height: 1.6;
+        color: #e0e0e0;
     }
     .roast-stats {
         display: flex;
@@ -55,19 +64,22 @@ def render_roast_widget(username: str):
         gap: 30px;
         margin-top: 20px;
         padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .stat {
         text-align: center;
     }
     .stat-label {
-        font-size: 12px;
-        opacity: 0.8;
+        font-size: 11px;
+        opacity: 0.6;
         text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
     }
     .stat-value {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 700;
+        color: #00ff9d;
     }
     </style>
     """, unsafe_allow_html=True)

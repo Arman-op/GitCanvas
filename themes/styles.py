@@ -52,14 +52,25 @@ THEMES = {
         "text_font_size": 14
     },
     "Neural": {
-    "bg_color": "#0a0f14",        
-    "border_color": "#1f6feb",    
-    "title_color": "#00e5ff",    
-    "text_color": "#9be7ff",      
-    "icon_color": "#00bcd4",      
-    "font_family": "'Consolas', 'Lucida Console', monospace",
-    "title_font_size": 19,
-    "text_font_size": 14
+        "bg_color": "#0a0f14",        
+        "border_color": "#1f6feb",    
+        "title_color": "#00e5ff",    
+        "text_color": "#9be7ff",      
+        "icon_color": "#00bcd4",      
+        "font_family": "'Consolas', 'Lucida Console', monospace",
+        "title_font_size": 19,
+        "text_font_size": 14
+    },
+    "Cyberpunk": {
+        "bg_color": "#050014",
+        "border_color": "#00ff9d",
+        "title_color": "#ff0055",
+        "text_color": "#00e5ff",
+        "icon_color": "#fcee0a",
+        "font_family": "'Courier New', Courier, monospace",
+        "title_font_size": 20,
+        "text_font_size": 14,
+        "is_pixel": True
     }
 }
 import json

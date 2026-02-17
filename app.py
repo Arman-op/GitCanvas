@@ -13,32 +13,109 @@ load_dotenv()
 st.set_page_config(page_title="GitCanvas Builder", page_icon="🛠️", layout="wide")
 
 # Custom CSS for bigger code boxes and cleaner UI
+# Custom CSS for bigger code boxes and cleaner UI
 st.markdown("""
 <style>
-    /* Make the code block width full and text bigger */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    /* Global */
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* App Background */
+    .stApp {
+        background: #050505;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: rgba(10, 10, 15, 0.8);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Inputs */
+    .stTextInput input, .stSelectbox, .stColorPicker {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        border-radius: 8px !important;
+    }
+    .stTextInput input:focus {
+        border-color: #ff0055 !important;
+        box-shadow: 0 0 10px rgba(255, 0, 85, 0.3) !important;
+    }
+
+    /* Buttons */
+    .stButton button {
+        background: linear-gradient(45deg, #ff0055, #00e5ff);
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .stButton button:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+    }
+
+    /* Code Blocks */
     code {
-        font-size: 1.1rem !important;
-        font-family: 'Courier New', monospace !important;
-        white-space: pre-wrap !important; /* Allow wrapping so it doesn't hide */
+        font-size: 1.0rem !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        white-space: pre-wrap !important;
     }
     .stTextArea textarea {
-        background-color: #0d1117;
-        color: #e6edf3;
-        font-family: monospace;
+        background-color: #0d1117 !important;
+        color: #00ff9d !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        border: 1px solid #30363d;
+        border-radius: 10px;
     }
-    /* Style for tool icons grid */
-    .icon-btn {
-        border: 1px solid #333;
+
+    /* Headers */
+    h1, h2, h3 {
+        color: white !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.5px;
+    }
+
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: transparent;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: rgba(255, 255, 255, 0.05);
         border-radius: 8px;
-        padding: 5px;
-        text-align: center;
-        background: #111;
-        cursor: pointer;
+        color: #aaa;
+        padding: 8px 16px;
+        border: 1px solid transparent;
     }
-    .icon-btn:hover {
-        background: #222;
-        border-color: #555;
+    .stTabs [aria-selected="true"] {
+        background-color: rgba(255, 0, 85, 0.2);
+        border: 1px solid #ff0055;
+        color: white;
     }
+
+    /* Cards/Images */
+    img {
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease;
+    }
+    img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    
 </style>
 """, unsafe_allow_html=True)
 

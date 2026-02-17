@@ -212,13 +212,43 @@ def draw_contrib_card(data, theme_name="Default", custom_colors=None):
                 if dist < 140:
                     opacity = min((c1 + c2) / 20, 0.5)
 
-                    dwg.add(dwg.line(
-                        start=(x1, y1),
-                        end=(x2, y2),
-                        stroke="#00f7ff",
-                        stroke_width=1,
-                        opacity=opacity
-                    ))
+    elif original_theme_name == "Music":
+        # Waveform Logic
+        # Contributions = Amplitude
+        contributions = data.get("contributions", [])[-60:] # Last 60 days to fit width
+        if not contributions: return dwg.tostring()
+        
+        # Center horizontally in the 500px width
+        # 60 bars * (width + gap)
+        bar_w = 6
+        gap = 2
+        total_w = len(contributions) * (bar_w + gap)
+        start_x = (width - total_w) / 2
+        
+        center_y = height / 2
+        max_h = 50 # Max amplitude up/down
+        
+        # Normalize
+        max_c = max((d.get('count', 0) for d in contributions), default=1)
+        if max_c == 0: max_c = 1
+        
+        for i, day in enumerate(contributions):
+            c = day.get('count', 0)
+            # Create a localized "beat" or wave
+            amp = (c / max_c) * max_h
+            if amp < 2: amp = 2 # Min height
+            
+            x = start_x + i * (bar_w + gap)
+            
+            # Color logic: Quiet = Purple, Loud = Cyan/Green
+            color = theme["title_color"]
+            if c > 5: color = "#00ffea"
+            elif c > 0: color = "#d600ff"
+            else: color = "#333" # Silence
+            
+            # Draw mirrored bar
+            dwg.add(dwg.rect(insert=(x, center_y - amp), size=(bar_w, amp * 2), 
+                             fill=color, rx=2, ry=2))
 
     else:
         # Default Grid (Github Style)
